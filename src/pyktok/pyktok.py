@@ -69,7 +69,8 @@ def generate_data_row(video_obj):
                    'author_heartcount',
                    'author_videocount',
                    'author_diggcount',
-                   'author_verified']
+                   'author_verified',
+                   'date_captured']
     data_list = []
     data_list.append(video_obj['id'])
     try:
@@ -155,6 +156,10 @@ def generate_data_row(video_obj):
         data_list.append(video_obj['author']['verified'])
     except Exception:
         data_list.append(False)
+    try:
+        data_list.append(datetime.utcnow().isoformat())
+    except Exception:
+        data_list.append(np.nan)
     data_row = pd.DataFrame(dict(zip(data_header,data_list)),index=[0])
     return data_row
 #currently unused, but leaving it in case it's needed later
